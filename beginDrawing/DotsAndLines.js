@@ -11,7 +11,7 @@
 // Vertex shader program; SIMD program written in GLSL; runs only on GPU.
 //  Each instance computes all the on-screen values for just one VERTEX,
 //  that is part of just one drawing primitive (point, line, or triangle)
-//  depicted in the CVV coord. system (+/-1, +/-1, +/-1) that fills our HTML5
+//  depicted in the CVcoord. system (+/-1, +/-1, +/-1) that fills our HTML5
 //  'canvas' object.
 // The 'attribute'  variable(s) (e.g.	a_Position) are taken from a vertex 
 // stored in the VBO.
@@ -81,7 +81,7 @@ function main() {
 
   // Draw connect-the-dots for 6 vertices (never 'vertexes'!!).
   // see http://www.khronos.org/opengles/sdk/docs/man/xhtml/glDrawArrays.xml
- gl.drawArrays(gl.LINE_LOOP, 0, n); // gl.drawArrays(mode, first, count)
+ gl.drawArrays(gl.LINE_STRIP, 0, n); // gl.drawArrays(mode, first, count)
 			//mode: sets drawing primitive to use. 
 						// WebGL offers these choices: 
 						// gl.POINTS
@@ -104,15 +104,47 @@ function initVertexBuffers(gl) {
 //==============================================================================
 // first, create a JavaScript typed array with all our vertex attribute values:
   var vertices = new Float32Array([
-     0.0,  0.5, 0.0, 1.0,	// CAREFUL! I made these into 4D points/ vertices: x,y,z,w.
-    -0.2,  0.0, 0.0, 1.0,	// new point!  (? What happens if I make w=0 instead of 1.0?)
-    -0.5, -0.5, 0.0, 1.0, // new point! (note we need a trailing commas here)  
-     0.0, -0.2, 0.0, 1.0, 	
-     0.5, -0.5, 0.0, 1.0,	
-     0.2,  0.0, 0.0, 1.0, 
+    //  0.0,  0.5, 0.0, 1.0,	// CAREFUL! I made these into 4D points/ vertices: x,y,z,w.
+    // -0.2,  0.0, 0.0, 1.0,	// new point!  (? What happens if I make w=0 instead of 1.0?)
+    // -0.5, -0.5, 0.0, 1.0, // new point! (note we need a trailing commas here)  
+    //  0.0, -0.2, 0.0, 1.0, 	
+    //  0.5, -0.5, 0.0, 1.0,	
+    //  0.2,  0.0, 0.0, 1.0, 
+    0, -0.2750003, -1.0, 1.0,
+    0.1515543, 0.07499933, 0.2625, 1.0,
+    0, 0.07499933, 0.35, 1.0,
+    0.3031087, 0.07499933, 0.1749998, 1.0,
+    0.1606882, 0.2749991, 1.0, 1.0,
+    0.3031087, 0.07499933, 0.1749998, 1.0,
+    -0.3031087, 0.07499933, 0.1749998, 1.0,
+    -0.160687, 0.2749991, 1.0, 1.0,
+    -0.3031087, 0.07499933, 0.1749998, 1.0,
+    0, -0.2750003, -1.0, 1.0,
+    -0.1515543, 0.07499933, 0.2625, 1.0,
+    -0.3031087, 0.07500052, -0.1750001, 1.0,
+    -0.3031087, 0.07499933, 0, 1.0,
+    0, 0.07500052, -0.035, 1.0,
+    -0.1515543, 0.07500052, -0.2625, 1.0,
+    0.3031087, 0.07499933, -0.1749998, 1.0,
+    0.1606882, 0.2749991, 1.0, 1.0,
+    0.3031087, 0.07499933, 0, 1.0,
+    0, -0.2750003, -1.0, 1.0,
+    0.3031087, 0.07499933, 0, 1.0,
+    0.1606882, 0.2749991, 1.0, 1.0,
+    0.08034468, 0.2749991, 0.1391605, 1.0,
+    0.1515543, 0.07499933, 0.2625, 1.0,
+    0.08034468, 0.2749991, 0.1391605, 1.0,
+    -0.08034348, 0.2749991, 0.1391605, 1.0,
+    -0.160687, 0.2749991, 1.0, 1.0,
+    -0.08034348, 0.2749991, 0.1391605, 1.0,
+    -0.1515543, 0.07499933, 0.2625, 1.0,
+    -0.08034348, 0.2749991, 0.1391605, 1.0,
+    -0.08034348, 0.2750003, -0.1391593, 1.0,
+    0.08034468, 0.2750003, -0.1391593, 1.0,
+    0.1606882, 0.2749991, 1.0, 1.0,
      
   ]);
-  var n = 6; // The number of vertices
+  var n = 32//19; // The number of vertices
 
   // Then in the GPU, create a vertex buffer object (VBO) to hold vertex data:
   var VBOloc = gl.createBuffer();	// get it's 'handle'
